@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BS1M: Зоряний Імпульс 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background: linear-gradient(to bottom, #000a09, #000a1a);
+            color: #f8f8f8;
+            overflow-x: hidden;
+        }
+
+        #gaming-zone {
+            max-width: 100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background: #411f00;
+            border: 4px solid #fffdfd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2em;
+            text-shadow: 2px 2px #000000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        nav button {
+            background: #671500;
+            border: 4px solid #fffdfd;
+            border-radius: 5px;
+            padding: 10px 20px;
+            color: #ffffff;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-shadow: 1px 1px #969696;
+        }
+
+        nav button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px #ffff00;
+        }
+
+        section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 4px solid #ffffff;
+            border-radius: 10px;
+        }
+
+        #game-section {
+            position: relative;
+            text-align: center;
+            display: none;
+        }
+
+        #game-container {
+            width: 100%;
+            display: block;
+        }
+
+        canvas {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+            border: 4px solid #00000062;
+        }
+
+        #leaderboard table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #f3f3f3;
+        }
+
+        #leaderboard th,
+        #leaderboard td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 2px solid #dbdb00;
+        }
+
+        #social {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        #social a {
+            color: #00ffdd;
+            text-decoration: none;
+            margin: 0 5px;
+            font-size: 1.2em;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.8em;
+            padding: 10px;
+            color: #ffffff;
+            text-shadow: 1px 1px #000000;
+        }
+
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000023;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            font-size: 20px;
+            z-index: 10000;
+        }
+
+        #menu {
+            margin-top: 5px;
+        }
+
+        button.logo-button {
+            background: #4f27008e;
+            border: 2px solid #0000001a;
+            border-radius: 50px;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #ffffff;
+            font-family: 'Press Start 2P', cursive;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 0 5px rgb(46, 68, 70);
+            text-transform: uppercase;
+        }
+
+        button.logo-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px #00ffcc;
+        }
+
+        #difficulty {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #ffffff;
+            font-size: 14px;
+            text-shadow: 1px 1px #000000;
+        }
+
+        h2 {
+            text-align: center;
+            color: #00b08d;
+            text-shadow: 2px 2px #000000;
+            font-size: 24px;
+        }
+
+        #killsCounter,
+        #hpCounter,
+        #levelCounter,
+        #coinCounter,
+        #artifactCounter {
+            font-size: 10px;
+            color: #ffffff;
+            text-shadow: 1px 1px #000000;
+            position: absolute;
+            left: 10px;
+        }
+
+        #killsCounter {
+            bottom: 429px;
+            color: #ff0707;
+        }
+
+        #hpCounter {
+            bottom: 415px;
+        }
+
+        #levelCounter {
+            bottom: 404px;
+        }
+
+        #coinCounter {
+            bottom: 392px;
+        }
+
+        #artifactCounter {
+            bottom: 380px;
+            color: #00ffe5;
+        }
+
+        #chest {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            background: #ffd900;
+            border: 2px solid #00fbff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.607);
+        }
+
+        #chest:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px #ffff00;
+        }
+
+        #chest::before {
+            content: '🎁';
+            font-size: 25px;
+            color: #ffea00;
+            text-shadow: 1px 1px #020029;
+        }
+
+        #joystick-container {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 120px;
+            height: 120px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            touch-action: none;
+        }
+
+        #joystick {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: #697400f6;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            box-shadow: 0 0 10px rgba(113, 77, 0, 0.5);
+        }
+
+        #shoot-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            background: #5e3d00c4;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #ffffff;
+            text-shadow: 1px 1px #000000;
+            touch-action: none;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .damage-text {
+            position: absolute;
+            color: #510000;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 1px 1px #000000;
+            pointer-events: none;
+            animation: floatUp 1s ease-out forwards;
+        }
+
+        .coin-text {
+            position: absolute;
+            color: #ffd700;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 1px 1px #000000;
+            pointer-events: none;
+            animation: floatUp 1.2s ease-out forwards;
+        }
+
+        .artifact-text {
+            position: absolute;
+            color: #00ffcc;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 1px 1px #000000;
+            pointer-events: none;
+            animation: floatUp 1.5s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 300px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav button {
+                width: 80%;
+                padding: 10px;
+                font-size: 0.8em;
+            }
+
+            #joystick-container {
+                bottom: 15px;
+                left: 15px;
+                width: 100px;
+                height: 100px;
+            }
+
+            #joystick {
+                width: 50px;
+                height: 50px;
+            }
+
+            #shoot-button {
+                bottom: 15px;
+                right: 15px;
+                width: 80px;
+                height: 80px;
+                font-size: 30px;
+            }
+
+            button.logo-button {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+        }
+
+        @media (max-width: 200px) {
+            #joystick-container {
+                bottom: 10px;
+                left: 10px;
+                width: 60px;
+                height: 60px;
+            }
+
+            #joystick {
+                width: 30px;
+                height: 30px;
+            }
+
+            #shoot-button {
+                bottom: 10px;
+                right: 10px;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+
+            button.logo-button {
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+        }
+
+        #artifacts-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 4px solid #ffffff;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .artifact {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #333;
+            border: 2px solid #fffdfd;
+            border-radius: 5px;
+            color: #ffffff;
+        }
+
+        .artifact h3 {
+            color: #00ffcc;
+            margin-bottom: 10px;
+        }
+
+        #artifactModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            color: #00ffcc;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        #artifactModal .modal-content {
+            max-width: 500px;
+            padding: 20px;
+            text-align: center;
+            background: #111;
+            border: 4px solid #00ffcc;
+            border-radius: 10px;
+        }
+
+        #artifactModal button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: linear-gradient(45deg, #FF4500, #00ffcc);
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            border-radius: 10px;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        #pixel-art-container {
+            position: absolute;
+            top: 70px;
+            right: 10px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            z-index: 1000;
+        }
+
+        #pixel-art-container:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #ffff00;
+        }
+
+        #pixel-art-canvas {
+            border: 2px solid #ffffff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loading">
+        <p> ִֶָ☾. Галактична пригода чекає! Завантаження 𓆝 𓆟 𓆞 </p>
+    </div>
+    <div style="position: fixed; bottom: 0; right: 0; margin: 10px; font-size: 12px; color: #ffffff;">
+        © 2025 «BS1M: Зоряний Імпульс»
+    </div>
+    <div id="game-container">
+        <h2 id="logo-glow">ᵕ̈ Зоряний Імпульс</h2>
+        <div id="killsCounter">☠Вбивств:0</div>
+        <div id="hpCounter">💊HP:100</div>
+        <div id="levelCounter">🎮Рівень:1</div>
+        <div id="coinCounter">🟡BS1MCOIN:0</div>
+        <div id="artifactCounter">🪐Артефакти:0</div>
+        <div id="menu">
+            <button class="logo-button" onclick="buyArmor()">🛡️ 50🟡</button>
+            <button class="logo-button" onclick="buySkin()">🟨 100🟡</button>
+            <button class="logo-button" onclick="showStats()">📊 Статистика</button>
+            <button class="logo-button" onclick="showArtifacts()">🪐 Артефакти</button>
+        </div>
+        <div id="difficulty">
+            <span>Складність:</span>
+            <select id="difficultySelect" onchange="changeDifficulty()">
+                <option value="easy">КосмоПілот</option>
+                <option value="normal" selected>ЗорянийСтрілець</option>
+                <option value="hard">ГалактичнийВоїн</option>
+            </select>
+        </div>
+        <div id="chestTimer" style="position: absolute; top: 30px; right: 10px; font-size: 12px; color: #ffffff;"></div>
+
+        <canvas id="gameCanvas" width="680" height="360"></canvas>
+        <div id="chest" onclick="openChest()">
+            <div id="chestIcon"></div>
+        </div>
+        <div id="joystick-container">
+            <div id="joystick"></div>
+        </div>
+        <div id="shoot-button">🔫</div>
+    </div>
+    <div id="social">
+        <p>🔓</p>
+        <a href="https://t.me/pixelcoin1bs" target="_blank">▫Telegram▫</a>
+        <a href="https://www.youtube.com/@SPIELSTART" target="_blank">YouTube▫</a>
+    </div>
+    <section id="artifacts-section">
+        <h2>Колекція Артефактів</h2>
+        <div id="artifacts-list"></div>
+    </section>
+    <div id="artifactModal">
+        <div class="modal-content">
+            <h2 id="artifactTitle"></h2>
+            <p id="artifactDescription"></p>
+            <button onclick="closeArtifactModal()">❌</button>
+        </div>
+    </div>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const bgCanvas = document.createElement('canvas');
+        bgCanvas.width = canvas.width;
+        bgCanvas.height = canvas.height;
+        const bgCtx = bgCanvas.getContext('2d');
+
+        let player = { x: canvas.width / 2, y: canvas.height - 100, w: 35, h: 33, hp: 100, armor: 0, coins: 0, shape: 'rect', artifacts: 0, speed: 5 };
+        let bullets = [];
+        let enemyBullets = [];
+        let enemies = [];
+        let medkits = [];
+        let coins = [];
+        let explosions = [];
+        let sparks = [];
+        let bulletSparks = [];
+        let stars = [];
+        let powerUps = [];
+        let artifacts = [];
+        let collectedArtifacts = [];
+        let keys = {};
+        let stats = { kills: 0, damageTaken: 0, coinsCollected: 0, artifactsCollected: 0 };
+        let enemyKillCount = 0;
+        let currentLevel = 1;
+        let enemySpeed = 2;
+        let difficulty = 'normal';
+        let lastShotTime = 0;
+        let shotCooldown = 150;
+        let enemyShotCooldown = 2000;
+        let dead = false;
+        let chestCooldown = 60000;
+        let lastChestOpenTime = 0;
+        let hasGoldenSkin = false;
+        let joystickActive = false;
+        let joystickStartX = 0;
+        let joystickStartY = 0;
+        let joystickDeltaX = 0;
+        let joystickDeltaY = 0;
+        let isShooting = false;
+        let coinGradient = null;
+        let lastFrameTime = 0;
+        const targetFPS = 30;
+        const frameInterval = 100 / targetFPS;
+        const MAX_BULLETS = 7;
+        const MAX_ENEMIES = 3;
+        const MAX_COINS = 1;
+        const MAX_MEDKITS = 2;
+        const MAX_POWERUPS = 12;
+        const MAX_SPARKS = 1;
+        const MAX_EXPLOSIONS = 1;
+        const MAX_ARTIFACTS = 1;
+
+        // Gamepad Support
+        let gamepadConnected = false;
+        let gamepadIndex = null;
+
+        window.addEventListener('gamepadconnected', (e) => {
+            gamepadConnected = true;
+            gamepadIndex = e.gamepad.index;
+            console.log('Геймпад підключено:', e.gamepad.id);
+        });
+
+        window.addEventListener('gamepaddisconnected', (e) => {
+            gamepadConnected = false;
+            gamepadIndex = null;
+            console.log('Геймпад відключено:', e.gamepad.id);
+        });
+
+        function handleGamepad() {
+            if (!gamepadConnected || gamepadIndex === null) return;
+            const gamepad = navigator.getGamepads()[gamepadIndex];
+            if (!gamepad) return;
+
+            const xAxis = gamepad.axes[0];
+            const yAxis = gamepad.axes[1];
+            const deadZone = 0.2;
+            if (Math.abs(xAxis) > deadZone) joystickDeltaX = xAxis;
+            if (Math.abs(yAxis) > deadZone) joystickDeltaY = yAxis;
+
+            if (gamepad.buttons[0].pressed) isShooting = true;
+            else isShooting = false;
+        }
+
+        function initStars() {
+            for (let i = 0; i < 30; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 1.5 + 0.5,
+                    opacity: Math.random() * 0.5 + 0.5,
+                    speed: Math.random() * 0.2 + 0.1
+                });
+            }
+        }
+
+        function initCoinGradient() {
+            const centerX = 7.5;
+            const centerY = 7.5;
+            coinGradient = ctx.createRadialGradient(centerX, centerY, 2, centerX, centerY, 7.5);
+            coinGradient.addColorStop(0, '#FFFF00');
+            coinGradient.addColorStop(1, '#FF8C00');
+        }
+
+        function drawCosmicBackground() {
+            const gradient = bgCtx.createRadialGradient(canvas.width / 2, canvas.height / 2, 50, canvas.width / 2, canvas.height / 2, canvas.width);
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 1)');
+            bgCtx.fillStyle = gradient;
+            bgCtx.fillRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                bgCtx.beginPath();
+                bgCtx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+                bgCtx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+                bgCtx.fill();
+            });
+            ctx.drawImage(bgCanvas, 0, 0);
+            stars.forEach(star => {
+                star.y += star.speed;
+                if (star.y > canvas.height) star.y = 0;
+            });
+        }
+
+        const joystickContainer = document.getElementById('joystick-container');
+        const joystick = document.getElementById('joystick');
+        const shootButton = document.getElementById('shoot-button');
+
+        joystickContainer.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            joystickActive = true;
+            joystickStartX = touch.clientX;
+            joystickStartY = touch.clientY;
+            updateJoystick(touch.clientX, touch.clientY);
+        });
+
+        joystickContainer.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            if (joystickActive) {
+                const touch = e.touches[0];
+                updateJoystick(touch.clientX, touch.clientY);
+            }
+        });
+
+        joystickContainer.addEventListener('touchend', () => {
+            joystickActive = false;
+            joystickDeltaX = 0;
+            joystickDeltaY = 0;
+            joystick.style.left = '50%';
+            joystick.style.top = '50%';
+        });
+
+        shootButton.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            isShooting = true;
+        });
+
+        shootButton.addEventListener('touchend', () => {
+            isShooting = false;
+        });
+
+        function updateJoystick(touchX, touchY) {
+            const rect = joystickContainer.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            joystickDeltaX = touchX - centerX;
+            joystickDeltaY = touchY - centerY;
+            const maxRadius = rect.width / 2 - joystick.offsetWidth / 2;
+            const distance = Math.sqrt(joystickDeltaX ** 2 + joystickDeltaY ** 2);
+            if (distance > maxRadius) {
+                const scale = maxRadius / distance;
+                joystickDeltaX *= scale;
+                joystickDeltaY *= scale;
+            }
+            joystick.style.left = `calc(50% + ${joystickDeltaX}px)`;
+            joystick.style.top = `calc(50% + ${joystickDeltaY}px)`;
+        }
+
+        document.addEventListener('keydown', e => keys[e.key] = true);
+        document.addEventListener('keyup', e => keys[e.key] = false);
+
+        function drawThruster() {
+            const flameColors = ['#800000', '#D2691E', '#008B8B'];
+            const flameColor = flameColors[Math.floor(Math.random() * flameColors.length)];
+            const flameWidth = Math.random() * 8 + 8;
+            const flameHeight = Math.random() * 20 + 20;
+            ctx.fillStyle = flameColor;
+            ctx.beginPath();
+            ctx.moveTo(player.x, player.y + player.h);
+            ctx.lineTo(player.x + player.w / 2, player.y + player.h + flameHeight);
+            ctx.lineTo(player.x + player.w, player.y + player.h);
+            ctx.closePath();
+            ctx.fill();
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = flameColor;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+
+        function drawPlayer() {
+            drawThruster();
+            ctx.save();
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = hasGoldenSkin ? '#FFFF00' : '#00ffcc';
+            if (player.shape === 'triangle') {
+                ctx.fillStyle = '#FF8C00';
+                ctx.beginPath();
+                ctx.moveTo(player.x + player.w / 2, player.y);
+                ctx.lineTo(player.x, player.y + player.h);
+                ctx.lineTo(player.x + player.w, player.y + player.h);
+                ctx.closePath();
+                ctx.fill();
+                ctx.fillStyle = '#FF8C00';
+                ctx.beginPath();
+                ctx.moveTo(player.x + player.w / 2, player.y + 5);
+                ctx.lineTo(player.x + 5, player.y + player.h - 5);
+                ctx.lineTo(player.x + player.w - 5, player.y + player.h - 5);
+                ctx.closePath();
+                ctx.fill();
+            } else {
+                ctx.fillStyle = hasGoldenSkin ? '#FF8C00' : '#00ffcc';
+                ctx.fillRect(player.x, player.y, player.w, player.h);
+            }
+            ctx.fillStyle = '#00ffcc';
+            ctx.font = 'bold 55px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🛸', player.x + player.w / 2, player.y + player.h / 2);
+            ctx.shadowBlur = 0;
+            ctx.restore();
+        }
+
+        function shoot() {
+            if (bullets.length < MAX_BULLETS) {
+                bullets.push({ x: player.x + player.w / 2 - 5, y: player.y, w: 10, h: 4, trail: [] });
+                // Add bullet sparks
+                for (let i = 0; i < 5; i++) {
+                    bulletSparks.push({
+                        x: player.x + player.w / 2,
+                        y: player.y,
+                        vx: Math.random() * 2 - 1,
+                        vy: Math.random() * -2 - 1,
+                        life: 15,
+                        color: '#FF4500'
+                    });
+                }
+            }
+        }
+
+        function enemyShoot(enemy) {
+            if (enemyBullets.length < MAX_BULLETS) {
+                enemyBullets.push({
+                    x: enemy.x + enemy.w / 2 - 5,
+                    y: enemy.y + enemy.h,
+                    w: 10,
+                    h: 4,
+                    speed: 5
+                });
+            }
+        }
+
+        function spawnEnemy() {
+            if (enemies.length < MAX_ENEMIES && currentLevel <= 100) {
+                let type;
+                if (currentLevel % 10 === 0 && Math.random() < 0.1) {
+                    type = 'boss';
+                } else {
+                    const types = ['normal', 'fast', 'tank'];
+                    type = types[Math.floor(Math.random() * types.length)];
+                }
+                let enemy = {
+                    x: Math.random() * (canvas.width - (type === 'boss' ? 60 : 30)),
+                    y: 0,
+                    w: type === 'boss' ? 60 : 30,
+                    h: type === 'boss' ? 60 : 30,
+                    type: type,
+                    hp: type === 'boss' ? 100 : (type === 'tank' ? 40 : (type === 'fast' ? 15 : 20)),
+                    speed: type === 'boss' ? 0.8 : (type === 'fast' ? 3.5 : (type === 'tank' ? 1.2 : 2)),
+                    color: type === 'boss' ? '#00FF00' : (type === 'fast' ? '#00CED1' : (type === 'tank' ? '#4682B4' : '#A9A9A9')),
+                    lastShot: 0
+                };
+                enemies.push(enemy);
+            }
+        }
+
+        function spawnMedkit() {
+            if (medkits.length < MAX_MEDKITS) {
+                medkits.push({ x: Math.random() * (canvas.width - 20), y: Math.random() * (canvas.height - 20), w: 20, h: 20 });
+            }
+        }
+
+        function spawnCoin() {
+            if (coins.length < MAX_COINS) {
+                coins.push({ x: Math.random() * (canvas.width - 15), y: Math.random() * (canvas.height - 15), w: 15, h: 15 });
+            }
+        }
+
+        function spawnPowerUp() {
+            if (powerUps.length < MAX_POWERUPS) {
+                const types = ['rapidFire', 'doubleDamage'];
+                const type = types[Math.floor(Math.random() * types.length)];
+                powerUps.push({
+                    x: Math.random() * (canvas.width - 20),
+                    y: Math.random() * (canvas.height - 20),
+                    w: 20,
+                    h: 20,
+                    type: type,
+                    duration: 10000,
+                });
+            }
+        }
+
+        function spawnArtifact() {
+            if (artifacts.length < MAX_ARTIFACTS && Math.random() < 0.01) {
+                const artifactTypes = [
+                    {
+                        name: 'Кристал Темної Матерії',
+                        description: 'Стародавній кристал, що містить енергію темної матерії. Збільшує швидкість стрільби на 20%.',
+                        effect: () => { shotCooldown = Math.max(50, shotCooldown * 0.8); }
+                    },
+                    {
+                        name: 'Кодекс Прибульців',
+                        description: 'Таємничий текст, написаний невідомою цивілізацією. Дає +50 BS1MCOIN.',
+                        effect: () => { player.coins += 50; stats.coinsCollected += 50; }
+                    },
+                    {
+                        name: 'Сфера Простору',
+                        description: 'Артефакт, що маніпулює простором. Збільшує швидкість гравця на 20%.',
+                        effect: () => { player.speed = (player.speed || 3) * 1.2; }
+                    }
+                ];
+                const type = artifactTypes[Math.floor(Math.random() * artifactTypes.length)];
+                artifacts.push({
+                    x: Math.random() * (canvas.width - 20),
+                    y: Math.random() * (canvas.height - 20),
+                    w: 20,
+                    h: 20,
+                    type: type
+                });
+            }
+        }
+
+        function drawBullets() {
+            bullets.forEach(b => {
+                b.y -= 5;
+                // Update trail
+                b.trail.push({ x: b.x + b.w / 2, y: b.y + b.h });
+                if (b.trail.length > 5) b.trail.shift();
+
+                // Draw trail
+                ctx.beginPath();
+                ctx.strokeStyle = 'rgba(255, 69, 0, 0.5)';
+                ctx.lineWidth = 2;
+                b.trail.forEach((t, i) => {
+                    ctx.globalAlpha = 0.5 - (i / b.trail.length) * 0.5;
+                    if (i === 0) ctx.moveTo(t.x, t.y);
+                    else ctx.lineTo(t.x, t.y);
+                });
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+
+                // Draw bullet with gradient and glow
+                const gradient = ctx.createRadialGradient(b.x + b.w / 2, b.y + b.h / 2, 2, b.x + b.w / 2, b.y + b.h / 2, b.w);
+                gradient.addColorStop(0, '#FFFFFF');
+                gradient.addColorStop(0.5, '#FF4500');
+                gradient.addColorStop(1, 'rgba(255, 69, 0, 0.2)');
+                ctx.fillStyle = gradient;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#FF4500';
+                ctx.beginPath();
+                ctx.ellipse(b.x + b.w / 2, b.y + b.h / 2, b.w / 2, b.h, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+            bullets = bullets.filter(b => b.y > -b.h && b.y < canvas.height && b.x > -b.w && b.x < canvas.width);
+        }
+
+        function drawBulletSparks() {
+            bulletSparks.forEach((s, i) => {
+                ctx.fillStyle = s.color;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, 1, 0, Math.PI * 2);
+                ctx.fill();
+                s.x += s.vx;
+                s.y += s.vy;
+                s.vy += 0.05;
+                s.life--;
+                if (s.life <= 0) {
+                    bulletSparks.splice(i, 1);
+                }
+            });
+        }
+
+        function drawEnemyBullets() {
+            ctx.fillStyle = '#00FF00';
+            enemyBullets.forEach(b => {
+                b.y += b.speed;
+                ctx.fillRect(b.x, b.y, b.w, b.h);
+                if (
+                    b.x < player.x + player.w &&
+                    b.x + b.w > player.x &&
+                    b.y < player.y + player.h &&
+                    b.y + b.h > player.y
+                ) {
+                    const damage = player.armor > 0 ? 5 : 10;
+                    player.hp -= damage;
+                    stats.damageTaken += damage;
+                    createDamageText(player.x + player.w / 2, player.y, damage);
+                    enemyBullets.splice(enemyBullets.indexOf(b), 1);
+                }
+            });
+            enemyBullets = enemyBullets.filter(b => b.y < canvas.height + b.h && b.y > -b.h);
+        }
+
+        const enemyTextures = {};
+
+        function initEnemyTextures() {
+            ['normal', 'fast', 'tank', 'boss'].forEach(type => {
+                let pixelArtIndex;
+                switch (type) {
+                    case 'fast': pixelArtIndex = 1; break; // Ракета
+                    case 'tank': pixelArtIndex = 2; break; // Куб
+                    case 'boss': pixelArtIndex = 3; break; // Дредноут
+                    default: pixelArtIndex = 0; break; // Корабль
+                }
+                const pixelSize = type === 'boss' ? 7.5 : 3.75; // Larger for boss
+                const pixelCanvas = document.createElement('canvas');
+                pixelCanvas.width = 8 * pixelSize;
+                pixelCanvas.height = 8 * pixelSize;
+                const pixelCtx = pixelCanvas.getContext('2d');
+                const image = pixelArtImages[pixelArtIndex];
+                for (let y = 0; y < image.data.length; y++) {
+                    for (let x = 0; x < image.data[y].length; x++) {
+                        pixelCtx.fillStyle = image.colors[image.data[y][x]];
+                        pixelCtx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+                    }
+                }
+                enemyTextures[type] = pixelCanvas;
+            });
+        }
+
+        function drawEnemies() {
+            enemies.forEach((e, i) => {
+                e.y += e.speed;
+
+                // Draw pre-rendered texture
+                ctx.save();
+                ctx.shadowBlur = e.type === 'boss' ? 15 : (e.type === 'fast' ? 12 : 8);
+                ctx.shadowColor = e.color;
+                ctx.drawImage(enemyTextures[e.type], e.x, e.y, e.w, e.h);
+                ctx.restore();
+
+                // Collision with player
+                if (
+                    e.x < player.x + player.w &&
+                    e.x + e.w > player.x &&
+                    e.y < player.y + player.h &&
+                    e.y + e.h > player.y
+                ) {
+                    const damage = player.armor > 0 ? 5 : 10;
+                    player.hp -= damage;
+                    stats.damageTaken += damage;
+                    if (explosions.length < MAX_EXPLOSIONS) {
+                        explosions.push({ x: e.x, y: e.y, r: 10, t: 10, type: e.type });
+                    }
+                    enemies.splice(i, 1);
+                }
+
+                // Enemy shooting
+                const now = Date.now();
+                if (now - e.lastShot > enemyShotCooldown) {
+                    enemyShoot(e);
+                    e.lastShot = now;
+                }
+            });
+            enemies = enemies.filter(e => e.hp > 0 && e.y < canvas.height + e.h && e.y > -e.h);
+        }
+
+        function drawExplosions() {
+            explosions.forEach((ex, i) => {
+                ctx.beginPath();
+                ctx.arc(ex.x, ex.y, ex.r, 0, 2 * Math.PI);
+                let color = '#FF8C00';
+                if (ex.type === 'fast') color = '#800000';
+                if (ex.type === 'tank') color = '#00FF00';
+                if (ex.type === 'normal') color = '#00FFFF';
+                ctx.fillStyle = color;
+                ctx.fill();
+                ex.r += 1.0;
+                ex.t--;
+                if (ex.t <= 0) {
+                    if (explosions.length < MAX_EXPLOSIONS) {
+                        for (let i = 0; i < 10; i++) {
+                            sparks.push({
+                                x: ex.x + Math.random() * ex.r - ex.r / 2,
+                                y: ex.y + Math.random() * ex.r - ex.r / 2,
+                                vx: Math.random() * 4 - 2,
+                                vy: Math.random() * 4 - 2,
+                                life: 20,
+                                color: color
+                            });
+                        }
+                    }
+                    explosions.splice(i, 1);
+                }
+            });
+        }
+
+        function drawMedkits() {
+            ctx.fillStyle = '#FF4500';
+            medkits.forEach((m, i) => {
+                ctx.font = 'bold 25px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('💊', m.x + m.w / 2, m.y + m.h / 2);
+                if (player.x < m.x + m.w && player.x + player.w > m.x &&
+                    player.y < m.y + m.h && player.y + player.h > m.y) {
+                    player.hp = Math.min(100, player.hp + 15);
+                    medkits.splice(i, 1);
+                }
+            });
+        }
+
+        let coinPulse = 0;
+        let coinPulseDirection = 1;
+
+        function drawCoins() {
+            coinPulse += coinPulseDirection * 0.1;
+            if (coinPulse > 2 || coinPulse < -2) coinPulseDirection *= -1;
+            coins.forEach((c, i) => {
+                const radius = (c.w / 2) + coinPulse;
+                const centerX = c.x + c.w / 2;
+                const centerY = c.y + c.h / 2;
+                ctx.fillStyle = coinGradient;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#FFFF00';
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 22px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('🟡', centerX, centerY);
+                if (player.x < c.x + c.w && player.x + player.w > c.x &&
+                    player.y < c.y + c.h && player.y + player.h > c.y) {
+                    player.coins += 10;
+                    stats.coinsCollected += 10;
+                    createCoinText(c.x, c.y, 10);
+                    coins.splice(i, 1);
+                }
+            });
+        }
+
+        function drawPowerUps() {
+            powerUps.forEach((p, i) => {
+                ctx.font = 'bold 25px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(p.type === 'rapidFire' ? '🔫' : '💥', p.x + p.w / 2, p.y + p.h / 2);
+                if (player.x < p.x + p.w && player.x + player.w > p.x &&
+                    player.y < p.y + p.h && player.y + player.h > p.y) {
+                    activatePowerUp(p.type);
+                    powerUps.splice(i, 1);
+                }
+            });
+        }
+
+        function drawArtifacts() {
+            artifacts.forEach((a, i) => {
+                ctx.save();
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#00ffcc';
+                ctx.fillStyle = '#00ffcc';
+                ctx.beginPath();
+                ctx.arc(a.x + a.w / 2, a.y + a.h / 2, a.w / 2, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 20px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('🪐', a.x + a.w / 2, a.y + a.h / 2);
+                ctx.restore();
+                if (player.x < a.x + a.w && player.x + player.w > a.x &&
+                    player.y < a.y + a.h && player.y + player.h > a.y) {
+                    collectArtifact(a, i);
+                }
+            });
+        }
+
+        function collectArtifact(artifact, index) {
+            player.artifacts++;
+            stats.artifactsCollected++;
+            collectedArtifacts.push(artifact.type);
+            artifact.type.effect();
+            createArtifactText(artifact.x, artifact.y, artifact.type.name);
+            showArtifactModal(artifact.type.name, artifact.type.description);
+            artifacts.splice(index, 1);
+            updateArtifactsUI();
+        }
+
+        function createDamageText(x, y, damage) {
+            const text = document.createElement('div');
+            text.className = 'damage-text';
+            text.innerText = `-${damage}`;
+            text.style.left = `${x + canvas.offsetLeft}px`;
+            text.style.top = `${y + canvas.offsetTop}px`;
+            document.body.appendChild(text);
+            setTimeout(() => text.remove(), 1000);
+        }
+
+        function createCoinText(x, y, amount) {
+            const text = document.createElement('div');
+            text.className = 'coin-text';
+            text.innerText = `+${amount} 🟡`;
+            text.style.left = `${x + canvas.offsetLeft}px`;
+            text.style.top = `${y + canvas.offsetTop}px`;
+            document.body.appendChild(text);
+            setTimeout(() => text.remove(), 1200);
+            if (sparks.length < MAX_SPARKS) {
+                for (let i = 0; i < 3; i++) {
+                    sparks.push({
+                        x: x + 7.5,
+                        y: y + 7.5,
+                        vx: Math.random() * 4 - 2,
+                        vy: Math.random() * 4 - 2,
+                        life: 20,
+                        color: '#00ffcc'
+                    });
+                }
+            }
+        }
+
+        function createArtifactText(x, y, name) {
+            const text = document.createElement('div');
+            text.className = 'artifact-text';
+            text.innerText = `+${name}`;
+            text.style.left = `${x + canvas.offsetLeft}px`;
+            text.style.top = `${y + canvas.offsetTop}px`;
+            document.body.appendChild(text);
+            setTimeout(() => text.remove(), 1500);
+            if (sparks.length < MAX_SPARKS) {
+                for (let i = 0; i < 5; i++) {
+                    sparks.push({
+                        x: x + 10,
+                        y: y + 10,
+                        vx: Math.random() * 4 - 2,
+                        vy: Math.random() * 4 - 2,
+                        life: 30,
+                        color: '#00ffcc'
+                    });
+                }
+            }
+        }
+
+        function showArtifactModal(name, description) {
+            const modal = document.getElementById('artifactModal');
+            document.getElementById('artifactTitle').innerText = name;
+            document.getElementById('artifactDescription').innerText = description;
+            modal.style.display = 'flex';
+        }
+
+        function closeArtifactModal() {
+            document.getElementById('artifactModal').style.display = 'none';
+        }
+
+        function showArtifacts() {
+            const section = document.getElementById('artifacts-section');
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
+            updateArtifactsUI();
+        }
+
+        function updateArtifactsUI() {
+            const list = document.getElementById('artifacts-list');
+            list.innerHTML = '';
+            collectedArtifacts.forEach(artifact => {
+                const div = document.createElement('div');
+                div.className = 'artifact';
+                div.innerHTML = `<h3>${artifact.name}</h3><p>${artifact.description}</p>`;
+                list.appendChild(div);
+            });
+        }
+
+        function checkBulletHits() {
+            bullets.forEach((b, bi) => {
+                enemies.forEach((e, ei) => {
+                    if (b.x < e.x + e.w && b.x + b.w > e.x && b.y < e.y + e.h && b.y + b.h > e.y) {
+                        e.hp -= 10 * (player.damageMultiplier || 1);
+                        createDamageText(e.x + e.w / 2, e.y, 10 * (player.damageMultiplier || 1));
+                        if (e.hp <= 0) {
+                            stats.kills++;
+                            enemyKillCount++;
+                            if (stats.kills === 10 && !window.secretShown) {
+                                window.secretShown = true;
+                                showSecretMessage();
+                            }
+                            if (explosions.length < MAX_EXPLOSIONS) {
+                                explosions.push({ x: e.x, y: e.y, r: 10, t: 15, type: e.type });
+                            }
+                            enemies.splice(ei, 1);
+                            player.coins += 10;
+                            createCoinText(e.x, e.y, 10);
+                        }
+                        if (sparks.length < MAX_SPARKS) {
+                            sparks.push({ x: e.x, y: e.y, vx: Math.random() * 4 - 2, vy: Math.random() * 4 - 2, life: 20 });
+                        }
+                        bullets.splice(bi, 1);
+                    }
+                });
+            });
+        }
+
+        function update() {
+            if (dead) return;
+            handleGamepad();
+            if (keys['ArrowUp']) player.y -= (player.speed || 3);
+            if (keys['ArrowDown']) player.y += (player.speed || 3);
+            if (keys['ArrowLeft']) player.x -= (player.speed || 3);
+            if (keys['ArrowRight']) player.x += (player.speed || 3);
+            if (keys[' ']) {
+                const now = Date.now();
+                if (now - lastShotTime > shotCooldown) {
+                    shoot();
+                    lastShotTime = now;
+                }
+            }
+            if (joystickActive) {
+                const speed = player.speed || 3;
+                player.x += (joystickDeltaX / 50) * speed;
+                player.y += (joystickDeltaY / 50) * speed;
+            }
+            if (isShooting) {
+                const now = Date.now();
+                if (now - lastShotTime > shotCooldown) {
+                    shoot();
+                    lastShotTime = now;
+                }
+            }
+            player.x = Math.max(0, Math.min(canvas.width - player.w, player.x));
+            player.y = Math.max(0, Math.min(canvas.height - player.h, player.y));
+
+            if (player.hp <= 0 && !dead) {
+                dead = true;
+                ctx.fillStyle = '#00ffcc';
+                ctx.font = '16px Orbitron';
+                ctx.fillText("💰 Секретное сообщение: Надішліть KOD-BS1MCOIN1 у Телеграм і Отримай Шанс на Бонус 1💲 ", 15, canvas.height / 2);
+                setTimeout(() => {
+                    dead = false;
+                    player.hp = 100;
+                    location.reload();
+                }, 3000);
+            }
+
+            if (enemyKillCount >= 10) {
+                currentLevel++;
+                enemyKillCount = 0;
+                enemySpeed += 0.5;
+                alert("Перехід на рівень " + currentLevel);
+            }
+        }
+
+        function drawUI() {
+            document.getElementById('killsCounter').innerText = `☠Вбивств: ${stats.kills}`;
+            document.getElementById('hpCounter').innerText = `💊HP: ${player.hp}`;
+            document.getElementById('levelCounter').innerText = `🎮Рівень: ${currentLevel}`;
+            document.getElementById('coinCounter').innerText = `🟡BS1MCOIN: ${player.coins}`;
+            document.getElementById('artifactCounter').innerText = `🪐Артефакти: ${player.artifacts}`;
+        }
+
+        function buyArmor() {
+            if (player.coins >= 50) {
+                player.armor += 20;
+                player.coins -= 50;
+                alert("✔️ Броня куплена!");
+            } else {
+                alert("❌ Недостатньо монет.");
+            }
+        }
+
+        function buySkin() {
+            if (player.coins >= 100) {
+                hasGoldenSkin = true;
+                player.coins -= 100;
+                alert("✔️ Скін активовано!");
+            } else {
+                alert("❌ Недостатньо монет.");
+            }
+        }
+
+        function showStats() {
+            alert(`📜 Статистика:\n☠ Вбивства: ${stats.kills}\n💥 Отримано шкоди: ${stats.damageTaken}\n🟡 Зібрано монет: ${stats.coinsCollected}\n🪐 Зібрано артефактів: ${stats.artifactsCollected}`);
+        }
+
+        function changeDifficulty() {
+            const selected = document.getElementById('difficultySelect').value;
+            difficulty = selected;
+            if (selected === 'easy') {
+                enemySpeed = 1.5;
+                enemyShotCooldown = 3000;
+                shotCooldown = 100;
+            } else if (selected === 'normal') {
+                enemySpeed = 3;
+                enemyShotCooldown = 2000;
+                shotCooldown = 150;
+            } else if (selected === 'hard') {
+                enemySpeed = 7;
+                enemyShotCooldown = 1000;
+                shotCooldown = 200;
+            }
+        }
+
+        const pixelArtImages = [
+            {
+                name: 'Корабль',
+                data: [
+                    [0, 0, 0, 1, 1, 0, 0, 0],
+                    [0, 0, 1, 1, 1, 1, 0, 0],
+                    [0, 1, 1, 2, 2, 1, 1, 0],
+                    [0, 1, 1, 1, 1, 1, 1, 0],
+                    [1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 0, 1, 0, 0, 1, 0, 1],
+                    [0, 0, 3, 0, 0, 3, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0]
+                ],
+                colors: ['#000000', '#A9A9A9', '#FFFFFF', '#FF4500'] // 0: bg, 1: primary, 2: highlight, 3: accent
+            },
+            {
+                name: 'Ракета',
+                data: [
+                    [0, 0, 0, 2, 2, 0, 0, 0],
+                    [0, 0, 1, 1, 1, 1, 0, 0],
+                    [0, 0, 1, 1, 1, 1, 0, 0],
+                    [0, 1, 1, 1, 1, 1, 1, 0],
+                    [0, 1, 1, 1, 1, 1, 1, 0],
+                    [0, 0, 1, 1, 1, 1, 0, 0],
+                    [0, 0, 3, 3, 3, 3, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0]
+                ],
+                colors: ['#000000', '#00CED1', '#FFFFFF', '#FFD700']
+            },
+            {
+                name: 'Куб',
+                data: [
+                    [1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 2, 1, 1, 1, 1, 2, 1],
+                    [1, 1, 1, 3, 3, 1, 1, 1],
+                    [1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 2, 1, 1, 1, 1, 2, 1],
+                    [1, 1, 1, 1, 1, 1, 1, 1],
+                    [0, 0, 0, 0, 0, 0, 0, 0]
+                ],
+                colors: ['#000000', '#4682B4', '#C0C0C0', '#FF0000']
+            },
+            {
+                name: 'Дредноут',
+                data: [
+                    [0, 1, 1, 2, 2, 1, 1, 0],
+                    [1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 3, 1, 1, 1, 1, 3, 1],
+                    [1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 3, 1, 1, 1, 1, 3, 1],
+                    [1, 1, 1, 1, 1, 1, 1, 1],
+                    [0, 0, 0, 0, 0, 0, 0, 0]
+                ],
+                colors: ['#000000', '#2F4F4F', '#FFD700', '#00FF00']
+            }
+        ];
+
+        function createPixelArtImage(index) {
+            const pixelSize = 10;
+            const image = pixelArtImages[index];
+            const pixelCanvas = document.createElement('canvas');
+            pixelCanvas.width = image.data[0].length * pixelSize;
+            pixelCanvas.height = image.data.length * pixelSize;
+            const pixelCtx = pixelCanvas.getContext('2d');
+
+            for (let y = 0; y < image.data.length; y++) {
+                for (let x = 0; x < image.data[y].length; x++) {
+                    pixelCtx.fillStyle = image.colors[image.data[y][x]];
+                    pixelCtx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+                }
+            }
+
+            return pixelCanvas;
+        }
+
+        function showPixelArt() {
+            const index = Math.floor(Math.random() * pixelArtImages.length);
+            const imageName = pixelArtImages[index].name;
+            alert(`✓Ви виграли рідкісну піксельну картинку: ${imageName}!`);
+            const container = document.createElement('div');
+            container.id = 'pixel-art-container';
+            const pixelCanvas = createPixelArtImage(index);
+            pixelCanvas.id = 'pixel-art-canvas';
+            container.appendChild(pixelCanvas);
+            document.getElementById('game-container').appendChild(container);
+
+            container.addEventListener('click', () => {
+                const dataURL = pixelCanvas.toDataURL('image/png');
+                const downloadLink = document.createElement('a');
+                downloadLink.href = dataURL;
+                downloadLink.download = `pixel-art-${index}.png`;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            });
+
+            setTimeout(() => {
+                container.remove();
+            }, 10000);
+        }
+
+        function openChest() {
+            const now = Date.now();
+            if (now - lastChestOpenTime < chestCooldown) {
+                alert("⟳ Скриня перезаряджається! ⏱ Спробуй пізніше.");
+                return;
+            }
+            lastChestOpenTime = now;
+            const lucky = Math.random();
+            if (lucky < 0.25) {
+                alert("🟨 Вам випав новий персонаж!");
+                player.shape = 'triangle';
+            } else if (lucky < 0.5) {
+                alert("🟡 Ви отримали 100 монет!");
+                player.coins += 100;
+                createCoinText(canvas.width - 80, 100, 50);
+            } else if (lucky < 0.75) {
+                alert("🪐 Ви знайшли рідкісний артефакт!");
+                const artifactTypes = [
+                    {
+                        name: 'Кристал Темної Матерії',
+                        description: 'Стародавній кристал, що містить енергію темної матерії. Збільшує швидкість стрільби на 20%.',
+                        effect: () => { shotCooldown = Math.max(50, shotCooldown * 0.8); }
+                    },
+                    {
+                        name: 'Кодекс Прибульців',
+                        description: 'Таємничий текст, написаний невідомою цивілізацією. Дає +50 BS1MCOIN.',
+                        effect: () => { player.coins += 50; stats.coinsCollected += 50; }
+                    },
+                    {
+                        name: 'Сфера Простору',
+                        description: 'Артефакт, що маніпулює простором. Збільшує швидкість гравця на 20%.',
+                        effect: () => { player.speed = (player.speed || 3) * 1.2; }
+                    }
+                ];
+                const artifact = artifactTypes[Math.floor(Math.random() * artifactTypes.length)];
+                collectedArtifacts.push(artifact);
+                player.artifacts++;
+                stats.artifactsCollected++;
+                artifact.effect();
+                showArtifactModal(artifact.name, artifact.description);
+                updateArtifactsUI();
+            } else {
+                showPixelArt();
+            }
+            startChestTimer();
+        }
+
+        function startChestTimer() {
+            let timeLeft = 60;
+            const timerElement = document.getElementById('chestTimer');
+            const timerInterval = setInterval(() => {
+                timeLeft--;
+                if (timeLeft >= 0) {
+                    timerElement.textContent = `⏱️ ${timeLeft} сек`;
+                } else {
+                    clearInterval(timerInterval);
+                    timerElement.textContent = '';
+                    openChest();
+                }
+            }, 1000);
+        }
+
+        function checkBonusReward() {
+            if (stats.kills >= 10 && !player.rewardedFor10Kills) {
+                player.rewardedFor10Kills = true;
+                alert("За 10 ☠ вбивств ви отримали 100 BS1MCOIN🟡 і новий скін🟨!");
+                player.coins += 100;
+                player.shape = 'triangle';
+                createCoinText(player.x, player.y, 100);
+            }
+            if (stats.artifactsCollected >= 3 && !player.rewardedFor3Artifacts) {
+                player.rewardedFor3Artifacts = true;
+                alert("За 3 🪐 артефакти ви отримали 200 BS1MCOIN🟡 і унікальний ефект!");
+                player.coins += 200;
+                player.hp = Math.min(100, player.hp + 20);
+                createCoinText(player.x, player.y, 200);
+            }
+        }
+
+        function showSecretMessage() {
+            const modal = document.createElement('div');
+            modal.id = 'secretModal';
+            modal.style.position = 'fixed';
+            modal.style.top = 0;
+            modal.style.left = 0;
+            modal.style.width = '100%';
+            modal.style.height = '100%';
+            modal.style.background = 'rgba(0, 0, 0, 0.9)';
+            modal.style.color = '#00ffcc';
+            modal.style.display = 'flex';
+            modal.style.flexDirection = 'column';
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
+            modal.style.fontSize = '20px';
+            modal.style.zIndex = 9999;
+            modal.innerHTML = `
+                <div style="max-width: 500px; padding: 20px; text-align: center;">
+                    <h2>👽 СЕКРЕТНО: ПРИБУЛЬЦІ В КОСМОСІ</h2>
+                    <p>Ти знищив 10 ворогів... Це активувало сигнал. Ми живемо в «зоні мовчання» — Секретна станція на зворотному боці Місяця. <br> Будь-яка спроба вирватися — відстежується і придушується 🛸 </p>
+                    <button id="readBtn" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer; background: linear-gradient(45deg, #FF4500, #00ffcc); border: 2px solid #ffffff; color: #ffffff; border-radius: 10px;">Прочитано</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.getElementById('readBtn').onclick = () => {
+                player.coins += 100;
+                createCoinText(player.x, player.y, 100);
+                alert("🎉 +100 BS1MCOIN за інтерес до таємниць всесвіту!");
+                modal.remove();
+            };
+        }
+
+        function drawSparks() {
+            sparks.forEach((s, i) => {
+                ctx.fillStyle = s.color || '#FF4500';
+                ctx.fillRect(s.x, s.y, 2, 2);
+                s.x += s.vx;
+                s.y += s.vy;
+                s.vy += 0.1;
+                s.life--;
+                if (s.life <= 0) {
+                    sparks.splice(i, 1);
+                }
+            });
+        }
+
+        function showAd() {
+            const adModal = document.createElement('div');
+            adModal.id = 'adModal';
+            adModal.style.position = 'fixed';
+            adModal.style.top = 0;
+            adModal.style.left = 0;
+            adModal.style.width = '100%';
+            adModal.style.height = '100%';
+            adModal.style.background = 'rgba(0, 0, 0, 0.9)';
+            adModal.style.color = '#ffffff';
+            adModal.style.display = 'flex';
+            adModal.style.flexDirection = 'column';
+            adModal.style.justifyContent = 'center';
+            adModal.style.alignItems = 'center';
+            adModal.style.fontSize = '16px';
+            adModal.style.zIndex = 9999;
+            adModal.innerHTML = `
+                <div style="max-width: 500px; padding: 20px; text-align: center; font-family: 'Press Start 2P', cursive;">
+                    <h2>KOD-YGJGMK</h2>
+                    <p>Присоединяйтесь к Bybit и получите до $6082 в виде бонусов</p>
+                    <p>Залишилось: <span id="adTimer" style="color: #ff4500; font-size: 20px;">12</span> сек</p>
+                    <a href="https://www.bybit.com/invite?ref=YGJGMK" style="margin-top: 20px; padding: 10px 20px; font-size: 14px; cursor: pointer; background: #994D00; color: #ffffff; border: 2px solid #ffffff; border-radius: 10px; text-decoration: none; font-family: 'Press Start 2P', cursive;">Перейти</a>
+                </div>
+            `;
+            document.body.appendChild(adModal);
+            let timeLeft = 12;
+            const timerElement = document.getElementById('adTimer');
+            const timerInterval = setInterval(() => {
+                timeLeft--;
+                if (timeLeft >= 0) {
+                    timerElement.textContent = timeLeft;
+                }
+            }, 1200);
+            setTimeout(() => {
+                clearInterval(timerInterval);
+                adModal.remove();
+            }, 12000);
+        }
+
+        function saveGame() {
+            const gameState = {
+                player: player,
+                stats: stats,
+                currentLevel: currentLevel,
+                enemySpeed: enemySpeed,
+                hasGoldenSkin: hasGoldenSkin,
+                enemyShotCooldown: enemyShotCooldown,
+                collectedArtifacts: collectedArtifacts
+            };
+            localStorage.setItem('save', JSON.stringify(gameState));
+        }
+
+        function loadGame() {
+            const saved = JSON.parse(localStorage.getItem('save'));
+            if (saved) {
+                player = saved.player;
+                stats = saved.stats;
+                currentLevel = saved.currentLevel;
+                enemySpeed = saved.enemySpeed;
+                hasGoldenSkin = saved.hasGoldenSkin;
+                enemyShotCooldown = saved.enemyShotCooldown || 2000;
+                collectedArtifacts = saved.collectedArtifacts || [];
+                updateArtifactsUI();
+            }
+        }
+
+        function activatePowerUp(type) {
+            if (type === 'rapidFire') {
+                shotCooldown = 50;
+                setTimeout(() => shotCooldown = difficulty === 'easy' ? 100 : (difficulty === 'normal' ? 150 : 200), 10000);
+                alert('🔫 Прискорена стрільба активована!');
+            } else if (type === 'doubleDamage') {
+                player.damageMultiplier = 2;
+                setTimeout(() => player.damageMultiplier = 1, 10000);
+                alert('💥 Подвійна шкода активована!');
+            }
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        joystickContainer.addEventListener('touchmove', debounce((e) => {
+            e.preventDefault();
+            if (joystickActive) {
+                const touch = e.touches[0];
+                updateJoystick(touch.clientX, touch.clientY);
+            }
+        }, 16));
+
+        function loop(currentTime) {
+            if (currentTime - lastFrameTime < frameInterval) {
+                requestAnimationFrame(loop);
+                return;
+            }
+            lastFrameTime = currentTime;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawCosmicBackground();
+            update();
+            drawPlayer();
+            drawBullets();
+            drawBulletSparks();
+            drawEnemyBullets();
+            checkBulletHits();
+            drawEnemies();
+            drawExplosions();
+            drawMedkits();
+            drawCoins();
+            drawPowerUps();
+            spawnArtifact();
+            drawArtifacts();
+            drawUI();
+            drawSparks();
+            checkBonusReward();
+            requestAnimationFrame(loop);
+        }
+
+        window.onload = function () {
+            setTimeout(function () {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('game-container').style.display = 'block';
+                initStars();
+                initCoinGradient();
+                initEnemyTextures();
+                drawCosmicBackground();
+                changeDifficulty();
+                loadGame();
+                setInterval(spawnEnemy, 1200);
+                setInterval(spawnMedkit, 10000);
+                setInterval(spawnCoin, 7000);
+                setInterval(showAd, 60000);
+                setInterval(spawnPowerUp, 15000);
+                window.addEventListener('beforeunload', saveGame);
+                loop(performance.now());
+            }, 3000);
+        };
+    </script>
+</body>
+
+</html>
